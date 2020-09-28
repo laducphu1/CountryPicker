@@ -32,7 +32,7 @@ open class CountryPickerWithSectionViewController: CountryPickerController {
     open override func viewDidAppear(_ animated: Bool) {
         
         if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = true
+            navigationItem.hidesSearchBarWhenScrolling = false
         }
         
         /// Request for previous country and automatically scroll table view to item
@@ -62,6 +62,7 @@ open class CountryPickerWithSectionViewController: CountryPickerController {
         controller.callBack = handler
         
         let navigationController = UINavigationController(rootViewController: controller)
+        navigationController.modalPresentationStyle = .fullScreen
         controller.presentingVC?.present(navigationController, animated: true, completion: nil)
         
         return controller
