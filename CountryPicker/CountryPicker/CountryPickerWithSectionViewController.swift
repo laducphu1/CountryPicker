@@ -54,6 +54,26 @@ open class CountryPickerWithSectionViewController: CountryPickerController {
         
         return controller
     }
+    
+    @objc public func customPresent(on viewController: UIViewController,
+                                               handler:@escaping (_ country: Country) -> Void) -> CountryPickerWithSectionViewController {
+        let controller = CountryPickerWithSectionViewController()
+        controller.presentingVC = viewController
+        controller.callBack = handler
+        
+        let navigationController = UINavigationController(rootViewController: controller)
+        controller.presentingVC?.present(navigationController, animated: true, completion: nil)
+        
+        return controller
+    }
+    
+    @objc public func customPresentController(on viewController: UIViewController,
+                               handler:@escaping (_ phoneCode: String?, _ image: UIImage?) -> Void) {
+            CountryPickerWithSectionViewController.presentController(on: viewController) { (country) in
+                handler(country.dialingCode, country.flag)
+            }
+            
+    }
 
 }
 

@@ -23,7 +23,7 @@ public enum CountryFilterOption {
 }
 
 
-open class CountryManager {
+open class CountryManager: NSObject {
     
     // MARK: - variable
     private(set) var countries = [Country]()
@@ -34,7 +34,7 @@ open class CountryManager {
         return countriesPath
     }
     
-    public static var shared: CountryManager = {
+    @objc public static var shared: CountryManager = {
         let countryManager = CountryManager()
         do { try countryManager.loadCountries()
         } catch {
@@ -44,7 +44,7 @@ open class CountryManager {
     }()
     
     /// Current country returns the country object from Phone/Simulator locale
-    open var currentCountry: Country? {
+    @objc open var currentCountry: Country? {
         guard let countryCode = Locale.current.regionCode else {
             return nil
         }
@@ -63,9 +63,9 @@ open class CountryManager {
     internal var filters: Set<CountryFilterOption> = [.countryName]
     
     
-    private init() {}
+    override private init() {}
     
-    func loadCountries() throws {
+    @objc func loadCountries() throws {
         
         guard let countriesFilePath = countriesFilePath else {
             throw "Missing contries file path"
@@ -87,7 +87,7 @@ open class CountryManager {
         
     }
 
-    func allCountries() -> [Country] {
+    @objc func allCountries() -> [Country] {
         return countries
     }
     
